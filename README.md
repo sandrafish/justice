@@ -30,7 +30,7 @@ There's another file here, bcdcscrapeall.py, which should scrape the whole site.
 
 Other issues:
 
-  Need to automate the first section (instead of copying and pasting, etc.). i'll work on that some.
+  Need to automate the first section (instead of copying and pasting, etc.) and set it up to run on it's own. i'll work on the first part, but have no idea how to do the second.
   
   Need to add the date the info was retrieved as a field in the four scripts.
   
