@@ -187,12 +187,14 @@ class InmateRecordScraper(object):
       
 
     def write_arrest(self, inmate_id, data):
+        """ writes the arrest records to a csv called arrest_details.csv """
 
         # define the column names
         arrest_fieldnames = ['inmate_id','case_number','confirm','arrest_date','arrest_time','arrest_location','warrant_description','warrant_comment','date_scraped']
 
+        # If arrest_details already exists, open the file for appending
         if os.path.isfile('data/arrest_details.csv'):
-            # arrest csv writer
+
             with open('data/arrest_details.csv', 'a') as arrest_record:
 
                 # instantiate csv writing object
@@ -210,6 +212,7 @@ class InmateRecordScraper(object):
                     'warrant_comment': data[6],
                     'date_scraped': datetime.today().date()
                 })
+        # If arrest_details does not exist, create it and write to it
         else:
             with open('data/arrest_details.csv', 'w') as arrest_record:
                 # instantiate csv writing object
@@ -233,10 +236,12 @@ class InmateRecordScraper(object):
 
 
     def write_warrant(self, inmate_id, data):
+        """ writes the warrant records to a csv called warrant_details.csv """
          
         # define the column names
         warrant_fieldnames = ['inmate_id','case_number','confirm','arrest_date','arrest_time','arrest_location','warrant_description','warrant_comment','date_scraped']
 
+        # If warrant_details already exists, open it for appending
         if os.path.isfile('data/warrant_details.csv'):
             with open('data/warrant_details.csv', 'a') as warrant_record:
 
@@ -255,6 +260,7 @@ class InmateRecordScraper(object):
                     'warrant_comment': data[6],
                     'date_scraped': datetime.today().date()
                 })
+        # If it does not exist, create it
         else:
             with open('data/warrant_details.csv', 'w') as warrant_record:
                
@@ -279,10 +285,12 @@ class InmateRecordScraper(object):
 
 
     def write_bail(self, inmate_id, data):
+        """ writes the bail records to a csv called bail_details.csv """
 
         # define the column names
         bail_fieldnames = ['inmate_id','case_number','bond_amount','bond_desc','date_scraped']
 
+        # If bail_details already exists, open it for appending
         if os.path.isfile('data/bail_details.csv'):
 
             with open('data/bail_details.csv', 'a') as bail_record:
@@ -298,6 +306,7 @@ class InmateRecordScraper(object):
                     'bond_desc': data[2],
                     'date_scraped': datetime.today().date()
                 })
+        # If it does not exist, create it
         else:
             with open('data/bail_details.csv', 'w') as bail_record:
 
@@ -503,10 +512,7 @@ class InmateRecordScraper(object):
             # send to parse_inmate definition
             self.parse_inmate(inmate_id, soup)
             
-            # add a few spaces between the output to make it easier to read
-            # print '\n'
-
-
+# Run the scrapers
 if __name__ == "__main__":
     scraper = InmateRecordScraper()
     inmates = scraper.scrape_inmates()
@@ -515,7 +521,7 @@ if __name__ == "__main__":
     if len(inmates) > 0:
         print 'Writing ' + str(len(inmates)) + ' new inmates and their records to csv files.'
         scraper.write_inmates(inmates)
-        scraper.scrape_individual_records(inmates)
+        scraper.scrape_individual_records(inmates) # There are a bunch of chained methods here -- it works, but not the best form. I'm leaving it as so for right now, but if we choose to open this scraper, it should be fixed. 
     else:
         print 'No new inmates.'
 
