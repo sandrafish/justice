@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # This script will run both the inmate and released inmates scraper, then push the results to github
-
 python scraper.py
 python release_scraper.py
 
